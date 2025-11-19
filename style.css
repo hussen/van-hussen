@@ -1,0 +1,614 @@
+/* Main Configuration */
+
+@layer configuration {
+
+*,*::before,*::after {
+    box-sizing      : border-box;
+    padding         : 0;
+    margin          : 0;
+    background      : none;
+    text-decoration : none;
+    outline         : none;
+    font-family     : inherit;
+    font-size       : inherit;
+    line-height     : inherit;
+    font-weight     : inherit;
+    color           : inherit;
+
+    /* Disable double tap to zoom */
+    touch-action : manipulation;
+
+    /* Fix the antialias when needed */
+    -webkit-font-smoothing  : antialiased;
+    -moz-osx-font-smoothing : grayscale;
+    font-feature-settings   : "kern", "liga", "clig", "calt";
+
+    /* Global Transitions */
+    transition-delay           : 0ms;
+    transition-duration        : 150ms;
+    transition-property        : none;
+    transition-timing-function : ease-out ;
+}
+
+summary {
+    list-style: none;
+}
+
+details summary::-webkit-details-marker{
+    display : none;
+}
+}
+
+@layer configuration {
+
+:root {
+    
+    /* Background Colors */
+    --background        : #fff;
+    --background-media  : #f9f9f9;
+    --background-code   : #f9f9f9;
+
+    /* Archive Labels */
+    --background-archive-interview : #f9f9f9;
+
+    /* Text Colors */
+    --text         : #474747;
+    --text-lighter : #999;
+
+    --lines : #eee;
+    --marks : #bbb;
+    --lists : #888;
+
+    /* The 2 shades of yellow */
+    --brand     : #FFF7B1;
+    --brand-alt : #FFEE50;
+    --underline : #cbdff2;
+    --underline-alt : #99c2e6;
+
+    /* Box styling */
+    --box-lines      : var(--lines);
+    --box-background : var(--background);
+
+    /* Font Size and Line Height 450px -> 3500px */
+    --font-size   : clamp(14px, 0.45vi + 12.42px, 26px);
+    --line-height : clamp(26px, 0.72vi + 22.75px, 48px);
+
+    /* Font Families - Using system fonts as fallback since we don't have Iowan */
+    --font-family      : "Palatino Linotype", "Palatino", "Book Antiqua", Georgia, serif;
+    --font-family-sans : system-ui, sans-serif;
+    --font-family-mono : ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    --font-style       : normal;
+    --font-weight      : 400;
+
+    /* Font Sizes and Styles */
+    --base-text    : 400 1rem/1.85 var(--font-family);
+
+    /* The three level of titles */
+    --h1-title : 700 1.6rem/1.5 var(--font-family);
+    --h2-title : 700 1.3rem/1.6 var(--font-family);
+    --h3-title : 700 1.15rem/1.7 var(--font-family);
+
+    /* Various Type Styles */
+    --caption           : 400 0.86rem/1.85 var(--font-family);
+    --code              : 400 0.86rem/1.85 var(--font-family-mono);
+    
+    --interlude-title   : 700 1rem/1.85 var(--font-family);
+    --interlude-text    : 400 0.86rem/1.85 var(--font-family);
+    
+    --interview-edition : 700 0.86rem/1.85 var(--font-family);
+    --interview-cta     : 700 0.86rem/3 var(--font-family);
+
+    --archive-dates  : 700 1rem/1.85 var(--font-family);
+    --archive-labels : 400 0.75rem/1.65 var(--font-family);
+
+    --table-head : 400 0.86rem/2.25 var(--font-family-sans);
+    --table-body : 400 0.86rem/2.25 var(--font-family);
+
+    --smaller-text : 400 0.790rem/0.790rlh var(--font-family);
+    --small-text   : 400 0.889rem/0.889rlh var(--font-family);
+    
+    /* Layout Variables */
+    --text-column       : 20rlh;
+    --text-column-wider : 22rlh;
+    --media-column      : 28rlh;
+    --media-width       : var(--media-column);
+
+    /* Design Variables */
+    --shadow : rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+
+    /* Set the defaults */
+    font-size   : var(--font-size);
+    line-height : var(--line-height);
+    font-family : var(--font-family);
+    font-weight : var(--font-weight);
+    background  : var(--background);
+    color       : var(--text);
+}
+
+body {
+    font-size   : var(--font-size);
+    line-height : var(--line-height);
+    padding     : 5rlh 1rlh 1rlh;
+}
+
+::selection {
+    background : var(--brand);
+}
+}
+
+@layer main {
+/* The Pre-Archive Text Content */
+aside {
+    text-align : left;
+    max-width  : var(--text-column);
+    margin     : 0.5rlh auto;
+
+    h2 {
+        font              : var(--interlude-title);
+        font-variant-caps : all-small-caps;
+        margin-bottom     : 1em;
+    }
+
+    div {
+        font       : var(--interlude-text);
+        font-style : italic;
+        /* text-wrap  : balance; */
+    }
+}
+}
+
+@layer main {
+/* Posts Archive */
+#archive {
+    margin    : 1rlh auto;
+    max-width : var(--text-column);
+    
+    h2 {
+        font          : var(--h3-title);
+        text-align    : center;
+        margin-bottom : 1em;
+    }
+
+    h3 {
+        font                : var(--archive-dates);
+        margin-top          : 2rem;
+        display             : grid;
+        justify-content     : space-between;
+        grid-template-areas : "year month";
+        columns             : auto auto;
+        font-variant-caps   : small-caps;
+    }
+
+    .year {
+        grid-area : year;
+    }
+
+    .month {
+        grid-area : month;
+    }
+}
+
+.archive-item {
+    display             : flex;
+    gap                 : .25rlh;
+    align-items         : first baseline;
+    transition-property : gap;
+    position            : relative;
+    font                : var(--base-text);
+
+    &:hover {
+        gap : 0.5rlh;
+        
+        p,span,time {
+            color : var(--text-lighter);
+        }
+    }
+
+    p {
+        white-space   : nowrap;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+        transition-property: color;
+    }
+
+    time,span {
+        transition-property: color;
+    }
+
+    hr {
+        flex : 1 1 auto;
+        height : 1px;
+        background: none;
+        border : none;
+        border-top : 1px dotted currentColor;
+        opacity: .2;
+        min-width: 1rlh;
+        transition-property: border;
+    }
+
+    span {
+        font              : var(--archive-labels);
+        background        : var(--background-archive-interview);
+        font-variant-caps : all-small-caps;
+        padding           : 0 0.35em;
+        margin-left       : 0.5em;
+        border-radius     : 3px;
+        display           : inline-block;
+    }
+}
+
+.archive-item[aria-current="page"] {
+    font-style : italic;
+}
+}
+
+@layer main {
+/* Website's Footer */
+footer {
+    padding : 3rlh 0 1.5rlh;
+    display: flex;
+    justify-content: center;
+
+    a {
+        font : var(--small-text);
+        font-variant-caps: all-small-caps;
+        transition-property: opacity;
+        
+        &:hover {
+            opacity: .75;
+        }
+        
+        &:not(:last-child)::after {
+            content : " — ";
+            white-space: pre;
+            opacity: .25;
+        }
+    }
+}
+}
+
+@layer main {
+/* The Info Box, Used in the interview page */
+.box {
+    max-width  : var(--text-column);
+    margin     : 2.5rlh auto 4rlh;
+    position   : relative;
+    border     : 1px solid var(--box-lines);
+    padding    : 1rlh 1rlh 1.5rlh;
+    background : var(--box-background);
+
+    /* Vertical Line */
+    &::before {
+        content : "";
+        position : absolute;
+        top : -2rlh;
+        bottom : -3rlh;
+        left : 50%;
+        width : 1px;
+        background: linear-gradient(to bottom, var(--background), var(--box-lines) 10% 90%, var(--background));
+        z-index: -1;
+    }
+
+    h2.box-title, .box-cta {
+        font: var(--interview-cta) !important;
+        font-variant-caps : all-small-caps !important;
+        position : absolute;
+        top : 00%;
+        left : 50%;
+        margin : unset !important;
+        transform : translate(-50%,-50%);
+        padding : 0 1rlh;
+        background: var(--background);
+        border : 1px solid var(--box-lines);
+    }
+
+    .box-cta {
+        top : unset;
+        bottom : 0;
+        transform : translate(-50%,50%);
+        box-shadow : var(--shadow);
+        transition-property: background,color,border-color,transform;
+        text-wrap: nowrap;
+    }
+
+    .box-cta:hover {
+        background   : #D9D9C8;
+        color        : #525742;
+        border-color : #cecebd;
+        transform    : translate(-50%,50%) scale(1.02);
+    }
+
+    p {
+        font-style : italic !important;
+    }
+}
+}
+
+@layer main {
+/* Markdown content styling */
+[data-md] {
+
+    h1,h2,h3,h4,h5,h6,p,ol,ul,blockquote,pre,details {
+        margin-left  : auto;
+        margin-right : auto;
+        max-width    : var(--text-column);
+    }
+
+    blockquote,pre {
+        padding : 1rlh;
+    }
+
+    blockquote {
+        max-width : var(--text-column-wider);
+    }
+
+    p,ul,ol,pre {
+        margin-bottom : 0.5rlh;
+    }
+
+    :where(p,ul,ol,pre):last-child {
+        margin-bottom : unset;
+    }
+
+    /* Titles */
+    h1 {
+        font          : var(--h1-title);
+        margin-bottom : 0.5em;
+        text-align: center;
+    }
+
+    h2 {
+        font          : var(--h2-title);
+        margin-bottom : 1em;
+        margin-top    : 2em;
+        text-align    : left;
+    }
+
+    h3,h4,h5,h6 {
+        font          : var(--h3-title);
+        margin-bottom : 1em;
+        margin-top    : 2em;
+        text-align    : left;
+    }
+
+    li h4 {
+        text-align : left;
+        margin-top : 0;
+    }
+
+    p {
+        font : var(--base-text);
+    }
+
+    /* Set the correct text indent */
+    p + p {
+        text-indent : 2ch;
+    }
+
+    /* General  */
+    strong {
+        font-weight : 700;
+    }
+
+    em {
+        font-style : italic;
+    }
+
+    /* Code Blocks */
+    code,pre {
+        background : var(--background-code);
+        font       : var(--code);
+    }
+
+    pre {
+        margin-top    : 1rlh;
+        margin-bottom : 1rlh;
+        border        : 2px dashed #ccc;
+        overflow : auto;
+    }
+
+    /* Horizontal Divider */
+    hr {
+        border     : none;
+        margin     : 1rlh 0;
+        text-align : center;
+
+        /* Add the flowers */
+        &::before {
+            content     : "✽ ✽ ✽";
+            white-space : pre;
+            color       : var(--marks);
+        }
+    }
+
+    /* Quotes */
+    blockquote {
+        border        : 1px solid var(--lines);
+        margin-top    : 1.5rlh;
+        margin-bottom : 1.5rlh;
+        position      : relative;
+        font-style    : italic;
+        border-radius : 2px;
+        box-shadow    : var(--shadow);
+
+        &::before {
+            content    : "❊ ❈ ❊";
+            color      : var(--marks);
+            position   : absolute;
+            top        : 0;
+            left       : 50%;
+            transform  : translate(-50%,-50%);
+            background : var(--background);
+            padding    : 0 0.25rem;
+            font-style : normal;
+        }
+
+        &:nth-child(odd)::before {
+            content : "❈ ❊ ❈";
+        }
+    }
+
+    /* Lists */
+    ul,ol {
+        padding-left : 2ch;
+    }
+
+    li::marker {
+        color : var(--lists);
+    }
+
+    ul {
+        list-style-type: circle;
+    }
+
+    /* Details/Summary */
+    details {
+        border : 1px solid var(--lines);
+
+        div {
+            border-top : 1px solid var(--lines);
+            padding : 1rlh;
+        }
+    }
+
+    summary {
+        padding : 0.5rlh 1rlh;
+        cursor : pointer;
+    }
+
+    .career-overview {
+        margin    : 3rlh auto;
+        max-width : var(--text-column);
+    }
+
+    .career-list {
+        list-style : none;
+        padding    : 0;
+        margin     : 0;
+        display    : flex;
+        flex-direction : column;
+        gap        : 0.75rlh;
+    }
+
+    .career-list li {
+        display        : flex;
+        align-items    : center;
+        gap            : 0.5rem;
+        font           : var(--base-text);
+        font-weight    : 500;
+    }
+
+    .career-list .role {
+        white-space : nowrap;
+    }
+
+    .career-list .timeline {
+        flex         : 1 1 auto;
+        border-bottom: 1px dotted var(--lines);
+        height       : 1px;
+    }
+
+    .career-list .years {
+        font          : var(--caption);
+        font-weight   : 600;
+        font-variant-numeric : tabular-nums;
+        color         : var(--text-lighter);
+        white-space   : nowrap;
+    }
+
+    /* Table Design */
+    table {
+        margin          : 1rlh auto;
+        width           : 100%;
+        max-width       : var(--media-width);
+        border-collapse : collapse;
+    }
+
+    table, tbody, thead, td, th {
+        border: 1px solid var(--lines);
+    }
+
+    thead {
+        background : var(--background-media);
+    }
+
+    th {
+        font : var(--table-head);
+    }
+
+    td {
+        font : var(--table-body);
+        padding : 0 0.5em
+    }
+}
+
+/* Links */
+:where(p,li,small) a {
+    background-image          : linear-gradient(to right, var(--brand) , var(--brand-alt));
+    background-repeat         : no-repeat;
+    transition-property       : background-size;
+    background-position       : 0% 100%;
+    background-size           : 300% 40%;
+    text-decoration-skip-ink  : none;
+    text-decoration-thickness : .5em;
+    text-underline-offset     : -.25em;
+    text-decoration-color     : var(--brand);
+    transition-property       : background-position;
+    
+    &:hover {
+        background-position : 100% 100%;
+    }
+}
+}
+
+@layer main {
+/* Styles for the images */
+.media-container {
+    margin    : 2rlh auto;
+    max-width : var(--media-column);
+    position  : relative;
+
+    figcaption {
+        font       : var(--caption);
+        font-style : italic;
+        text-align : center;
+        margin-top : 1rem;
+    }
+}
+
+.media-content {
+    padding       : 1rlh;
+    background    : var(--background-media);
+    border-radius : 3px;
+    max-height    : 100%;
+}
+
+.media-img,
+.media-video {
+    display       : block;
+    border-radius : 3px;
+    max-height    : calc(100vh - 4rlh);
+    max-width     : 100%;
+    box-shadow    : 0 15px 25px rgba(0,0,0,.15);
+    margin        : auto;
+    border : none;
+    outline : none;
+}
+
+.media-video {
+    width : 100%;
+}
+
+u {
+    background-image: linear-gradient(to right, var(--underline), var(--underline-alt));
+    background-repeat: no-repeat;
+    transition-property: background-size;
+    background-position: 0% 100%;
+    background-size: 300% 40%;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: .5em;
+    text-underline-offset: -.25em;
+    text-decoration-color: var(--brand);
+    transition-property: background-position;
+}
+}
